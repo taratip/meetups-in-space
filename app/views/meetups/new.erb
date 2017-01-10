@@ -1,0 +1,30 @@
+<% if current_user %>
+<h1>Add Meetup</h1>
+<% if @meetup.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @meetup.errors.full_messages.each do |msg| %>
+        <li><span style="color: red;"><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<form action="/meetups/create" method="post">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="meetup[name]" value="<%= @meetup.name %>">
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" name="meetup[description]" row="4" value="<%= @meetup.description %>"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="loaction">Location:</label>
+    <input type="text" id="location" name="meetup[location]" value="<%= @meetup.location %>">
+  </div>
+  <br />
+  <input type="submit" value="Add a meetup">
+</form>
+<% else %>
+  <h3>You are not currently signed in. Please sign in first!</h3>
+<% end %>

@@ -1,0 +1,45 @@
+<div>
+  <h1>Name: <%= @meetup.name %></h1>
+  <dl>
+    <dt>Description:</dt>
+    <dd><%= @meetup.description %></dd>
+    <br />
+    <dt>Location:</dt>
+    <dd><%= @meetup.location %></dd>
+    <br />
+    <dt>Created by:</dt>
+    <dd><%= @meetup.creator.username %></dd>
+  </dl>
+  <% if (current_user && (current_user.id == @meetup.creator_id)) %>
+    <form action="/meetups/<%= @meetup.id %>" method="post">
+        <a style="text-decoration: none;" href="/meetups/edit/<%= @meetup.id %>">Edit</a>
+        <input type="hidden" name="_method" value="Delete">
+        <input type="submit" value="Cancel">
+    </form>
+  <% end %>
+</div>
+<div>
+  <h1>Members:</h1>
+  <ul class="members">
+  <% if @members.size > 0 %>
+    <% @members.each do |member| %>
+      <li id=<%= member.user.id %>><img src="<%= member.user.avatar_url %>" height="42" width="42">
+        <%= member.user.username %></li>
+    <% end %>
+  <% end %>
+  </ul>
+  <div id="join-div">
+  <% if (current_user && !@current_member && (current_user.id != @meetup.creator.id)) || current_user.nil? %>
+    <form action="/meetups/<%= @meetup.id %>" id="join-form" method="post">
+      <input type="submit" id="join" value="Join">
+    </form>
+  <% end %>
+  </div>
+  <div id="leave-div">
+  <% if (current_user && @current_member) %>
+      <form action="/meetups/leave/<%= @meetup.id %>" id="delete-form" method="post">
+        <input type="submit" id="leave" value="Leave">
+      </form>
+  <% end %>
+  </div>
+</div>

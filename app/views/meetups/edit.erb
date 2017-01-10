@@ -1,0 +1,26 @@
+<h1>Edit Meetup</h1>
+<% if @errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @errors.full_messages.each do |msg| %>
+        <li><span style="color: red;"><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<form action="/meetups/edit/<%= @meetup.id %>" method="post">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="meetup[name]" value="<%= @meetup.name %>">
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" name="meetup[description]" row="4"  value="<%= @meetup.description %>"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="loaction">Location:</label>
+    <input type="text" id="location" name="meetup[location]" value="<%= @meetup.location %>">
+  </div>
+  <br />
+  <input type="submit" value="Save">
+</form>
